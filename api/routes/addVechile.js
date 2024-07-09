@@ -29,9 +29,9 @@ router.post('/', async (req, res, next) => {
         const file = req.files.photo;
 
         // Check if carName or carType already exists
-        const existVechile = await Vechile.findOne({ $or: [{ carName }, { carType }] });
+        const existVechile = await Vechile.findOne({ $or: [{ carName }] });
         if (existVechile) {
-            return res.status(409).json({ message: 'Car or its Type already exists' });
+            return res.status(409).json({ message: 'Car  already exists' });
         }
 
         // Upload the file to Cloudinary

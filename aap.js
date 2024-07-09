@@ -2,6 +2,7 @@ const express = require('express')
 const studentRoute = require('./api/routes/student')
 const facultyRoute = require('./api/routes/faculty')
 const user = require('./api/routes/user.js')
+const vechile = require('./api/routes/addVechile.js')
 const app = express()
 const mongoose = require('mongoose');
 require('dotenv').config()
@@ -33,6 +34,7 @@ app.use(bodyParser.json())
 app.use('/student',studentRoute)
 app.use('/faculty',facultyRoute)
 app.use('/user',user)
+app.use('/vechile',vechile)
 
 app.use((req,res,next)=>{
     res.status(404).json({

@@ -16,12 +16,7 @@ mongoose.connect(process.env.MONGODB_URL)
   .catch(error => {
     console.error(error); 
   });  
-//   mongoose.connection.on('error',error=>{
-//     console.log("connection failed")
-//   })
-//   mongoose.connection.on('connected',error=>{
-//     console.log("connected")
-//   })
+
 app.use(fileUpload({
   useTempFiles:true
 }))
@@ -29,6 +24,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST'], // Add the HTTP methods you want to allow
+  allowedHeaders: ['Content-Type', 'Authorization'], // Add headers you want to allow
+}));
 
 
 app.use('/student',studentRoute)

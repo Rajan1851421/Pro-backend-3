@@ -4,16 +4,10 @@ const mongoose = require("mongoose");
 const User = require("../model/user.model.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cloudinary = require('cloudinary').v2
 require('dotenv').config()
 
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true
-  });
+
 // find all user
 router.get("/", async (req, res, next) => {
   try {
@@ -29,26 +23,19 @@ router.get("/", async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
     try {
-        const { username, email, password, phone, userType } = req.body;
-        const file = req.files.photo;
-
+        const { username, email, password, phone, userType } = req.body;      
         // Check if username or email already exists
         const existingUser = await User.findOne({ $or: [{ username }, { email }] });
         if (existingUser) {
             return res.status(409).json({ message: 'Username or email already exists' });
-        }
-
-        // Upload the file to Cloudinary
-        const result = await cloudinary.uploader.upload(file.tempFilePath);
+        }       
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
         // Create a new user instance
         const user = new User({
             username,
-            password: hashedPassword,
-            image: result.url,
+            password: hashedPassword,            
             phone,
             email,
             userType,
@@ -56,7 +43,6 @@ router.post('/signup', async (req, res, next) => {
 
         // Save the user to the database
         const savedUser = await user.save();
-
         res.status(201).json({ message: 'User created successfully', user: savedUser });
     } catch (error) {
         console.error(error);

@@ -63,7 +63,7 @@ router.delete("/:id", async (req, res, next) => {
   .exec()
   .then((result) => {
     res.status(200).json({
-      message:"Successfull DEleted",
+      message:"Successfull Deleted",
       Vechile: result,
     });
   });

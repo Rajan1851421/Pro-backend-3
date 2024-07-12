@@ -11,6 +11,7 @@ const userRoute = require('./api/routes/user');
 const vehicleRoute = require('./api/routes/addVechile');
 
 const app = express();
+app.use(cors());
 
 // Connect with MongoDB database
 mongoose.connect(process.env.MONGODB_URL, {
@@ -23,7 +24,6 @@ mongoose.connect(process.env.MONGODB_URL, {
 });
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(fileUpload({

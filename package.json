@@ -1,7 +1,7 @@
 {
   "name": "pro-backend-3",
   "version": "1.0.0",
-  
+  "proxy":"https://pro-backend-three-alpha.vercel.app/",
   "description": "",
   "main": "server.js",
   "scripts": {

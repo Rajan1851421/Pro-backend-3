@@ -19,6 +19,31 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  const _id = req.params.id;
+  User.findById(_id)
+    .exec()
+    .then((result) => {
+      res.status(200).json({
+        Users: result,
+      });
+    });
+});
+
+router.delete("/:id", async (req, res, next) => {
+  const _id = req.params.id;
+  await User.findByIdAndDelete(_id)
+  .exec()
+  .then((result) => {
+    res.status(200).json({
+      message:"Successfull Deleted",
+      User: result,
+    });
+  });
+
+});
+
+
 // register user
 
 router.post('/signup', async (req, res, next) => {

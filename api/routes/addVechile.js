@@ -47,7 +47,6 @@ router.post('/', async (req, res, next) => {
 
     // Save the vechile to the database
     const savedVechile = await vechile.save();
-
     res.status(201).json({ message: 'Vechile added successfully', vechile: savedVechile });
   } catch (error) {
     console.error("POST /vechile error:", error);
@@ -77,7 +76,7 @@ router.get("/:id", async (req, res, next) => {
     .exec()
     .then((result) => {
       res.status(200).json({
-        student: result,
+        Vehicle: result,
       });
     });
 });

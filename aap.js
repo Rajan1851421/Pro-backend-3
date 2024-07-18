@@ -9,6 +9,7 @@ const studentRoute = require('./api/routes/student');
 const facultyRoute = require('./api/routes/faculty');
 const userRoute = require('./api/routes/user');
 const vehicleRoute = require('./api/routes/addVechile');
+const testimonialRoute = require('./api/routes/testimonial')
 
 const app = express();
 app.use(cors());
@@ -35,6 +36,7 @@ app.use('/student', studentRoute);
 app.use('/faculty', facultyRoute);
 app.use('/user', userRoute);
 app.use('/vehicle', vehicleRoute);
+app.use('/testimonial',testimonialRoute)
 
 // 404 Error Handling
 app.use((req, res, next) => {

@@ -22,18 +22,20 @@ router.get("/", async (req, res, next) => {
   // Create a new testimonial
   router.post("/", async (req, res, next) => {
     try {
-      const { name, rating, description } = req.body;
-      const newTestimonial = new Testimonial({ name, rating, description });
-      await newTestimonial.save();
-      res.status(201).json({
-        message :'Successfully Post',
-        result:newTestimonial
-      });
+        const { name, rating, description } = req.body;
+        console.log("Request body:", req.body); // Log the request body to verify the data
+        const newTestimonial = new Testimonial({ name, rating, description });
+        await newTestimonial.save();
+        res.status(201).json({
+            message: 'Successfully Post',
+            result: newTestimonial
+        });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Something went wrong" });
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
     }
-  });
+});
+
 // delete testimonial by id
   router.delete("/:id", async (req, res, next) => {
     const _id = req.params.id;

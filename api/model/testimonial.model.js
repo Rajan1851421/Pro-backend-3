@@ -4,7 +4,7 @@ const testimonialSchema = new mongoose.Schema({
   
     name: String,
     rating: Number,
-    discription: String,
+    description: String,
     
 
   }, {

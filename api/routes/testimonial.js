@@ -25,12 +25,30 @@ router.get("/", async (req, res, next) => {
       const { name, rating, description } = req.body;
       const newTestimonial = new Testimonial({ name, rating, description });
       await newTestimonial.save();
-      res.status(201).json(newTestimonial);
+      res.status(201).json({
+        message :'Successfully Post',
+        result:newTestimonial
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Something went wrong" });
     }
   });
+// delete testimonial by id
+  router.delete("/:id", async (req, res, next) => {
+    const _id = req.params.id;
+
+    try {
+        const result = await Testimonial.findByIdAndDelete(_id).exec();
+        res.status(200).json({
+            message: "Successfully Deleted",
+            testimonial: result,
+        });
+    } catch (error) {
+        next(error); // Pass the error to the next middleware (typically the error handler)
+    }
+});
+
 
 
 

@@ -119,4 +119,28 @@ router.post("/login", (req, res, next) => {
     })
 });
 
+router.post("/update_password", async (req, res, next) => {
+  try {
+    const { username,password } = req.body;  
+    const verifyUsername = await User.findOne({ username: username });
+
+    if (!verifyUsername) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log(username);
+    console.log(verifyUsername.password);
+    
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    verifyUsername.password = hashedPassword
+    await verifyUsername.save()
+    res.status(200).json({ message: "Password updated successfully" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;

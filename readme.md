@@ -1,5 +1,5 @@
 
-
+for run cmd  --> nodemon server.js
 get all sudent list
 GET
 http://localhost:3000/student

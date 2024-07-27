@@ -22,11 +22,16 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// register user
-router.post('/', async (req, res, next) => {
+// add vechile 
+router.post('/', async (req, res) => {
   try {
     const { carName, carType, rate } = req.body;
+    if (!req.files || !req.files.photo) {
+      return res.status(400).json({ message: 'No photo uploaded' });
+    }
+
     const file = req.files.photo;
+    console.log("Received file:", file); // Log the received file
 
     // Check if carName already exists
     const existVechile = await Vechile.findOne({ carName });
@@ -36,8 +41,9 @@ router.post('/', async (req, res, next) => {
 
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(file.tempFilePath);
+    console.log("Cloudinary upload result:", result); // Log the Cloudinary upload result
 
-    // Create a new vechile instance
+    // Create a new vehicle instance
     const vechile = new Vechile({
       carName,
       image: result.url,
@@ -45,11 +51,11 @@ router.post('/', async (req, res, next) => {
       carType
     });
 
-    // Save the vechile to the database
+    // Save the vehicle to the database
     const savedVechile = await vechile.save();
-    res.status(201).json({ message: 'Vechile added successfully', vechile: savedVechile });
+    res.status(201).json({ message: 'Vehicle added successfully', vechile: savedVechile });
   } catch (error) {
-    console.error("POST /vechile error:", error);
+    console.error("POST /vehicle error:", error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

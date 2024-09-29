@@ -25,13 +25,13 @@ router.get("/", async (req, res, next) => {
 // add vechile 
 router.post('/', async (req, res) => {
   try {
-    const { carName, carType, rate } = req.body;
-    if (!req.files || !req.files.photo) {
-      return res.status(400).json({ message: 'No photo uploaded' });
-    }
+    const { carName, carType, rate,imgUrl } = req.body;
+    // if (!req.files || !req.files.photo) {
+    //   return res.status(400).json({ message: 'No photo uploaded' });
+    // }
 
-    const file = req.files.photo;
-    console.log("Received file:", file); // Log the received file
+    // const file = req.files.photo;
+    // console.log("Received file:", file); 
 
     // Check if carName already exists
     const existVechile = await Vechile.findOne({ carName });
@@ -40,13 +40,14 @@ router.post('/', async (req, res) => {
     }
 
     // Upload the file to Cloudinary
-    const result = await cloudinary.uploader.upload(file.tempFilePath);
-    console.log("Cloudinary upload result:", result); // Log the Cloudinary upload result
+    // const result = await cloudinary.uploader.upload(file.tempFilePath);
+    // console.log("Cloudinary upload result:", result); 
 
     // Create a new vehicle instance
     const vechile = new Vechile({
       carName,
-      image: result.url,
+      // image: result.url,
+      image: imgUrl,
       rate,
       carType
     });

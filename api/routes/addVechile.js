@@ -23,31 +23,59 @@ router.get("/", async (req, res, next) => {
 });
 
 // add vechile 
+// router.post('/', async (req, res) => {
+//   try {
+//     const { carName, carType, rate,imgUrl } = req.body;
+//     // if (!req.files || !req.files.photo) {
+//     //   return res.status(400).json({ message: 'No photo uploaded' });
+//     // }
+
+//     // const file = req.files.photo;
+//     // console.log("Received file:", file); 
+
+//     // Check if carName already exists
+//     const existVechile = await Vechile.findOne({ carName });
+//     if (existVechile) {
+//       return res.status(409).json({ message: 'Car already exists' });
+//     }
+
+//     // Upload the file to Cloudinary
+//     // const result = await cloudinary.uploader.upload(file.tempFilePath);
+//     // console.log("Cloudinary upload result:", result); 
+
+//     // Create a new vehicle instance
+//     const vechile = new Vechile({
+//       carName,
+//       // image: result.url,
+//       image: imgUrl,
+//       rate,
+//       carType
+//     });
+
+//     // Save the vehicle to the database
+//     const savedVechile = await vechile.save();
+//     res.status(201).json({ message: 'Vehicle added successfully', vechile: savedVechile });
+//   } catch (error) {
+//     console.error("POST /vehicle error:", error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
+
+
 router.post('/', async (req, res) => {
   try {
-    const { carName, carType, rate,imgUrl } = req.body;
-    // if (!req.files || !req.files.photo) {
-    //   return res.status(400).json({ message: 'No photo uploaded' });
-    // }
+    const { carName, carType, rate, image } = req.body;
 
-    // const file = req.files.photo;
-    // console.log("Received file:", file); 
-
-    // Check if carName already exists
+    // Check if the carName already exists
     const existVechile = await Vechile.findOne({ carName });
     if (existVechile) {
       return res.status(409).json({ message: 'Car already exists' });
     }
 
-    // Upload the file to Cloudinary
-    // const result = await cloudinary.uploader.upload(file.tempFilePath);
-    // console.log("Cloudinary upload result:", result); 
-
     // Create a new vehicle instance
     const vechile = new Vechile({
       carName,
-      // image: result.url,
-      image: imgUrl,
+      image, // Directly store the image URL from the request body
       rate,
       carType
     });
@@ -60,6 +88,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 
 // Delete by id
